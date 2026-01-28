@@ -24,4 +24,4 @@ twilio==9.0.4
 sendgrid==6.11.0
 
 # Utilities
-python-dateutil==2.8.2
+python-dateutil==2.8.2pydantic-settings==2.2.1
