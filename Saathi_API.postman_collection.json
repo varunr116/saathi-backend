@@ -1,0 +1,192 @@
+{
+  "info": {
+    "name": "Saathi API",
+    "description": "API collection for testing Saathi backend endpoints",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/",
+          "host": ["{{base_url}}"],
+          "path": [""]
+        },
+        "description": "Basic health check"
+      }
+    },
+    {
+      "name": "Detailed Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/health",
+          "host": ["{{base_url}}"],
+          "path": ["health"]
+        },
+        "description": "Detailed health check with service status"
+      }
+    },
+    {
+      "name": "Text Query",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "text",
+              "value": "Hello Saathi, introduce yourself",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{base_url}}/api/query",
+          "host": ["{{base_url}}"],
+          "path": ["api", "query"]
+        },
+        "description": "Simple text query without image"
+      }
+    },
+    {
+      "name": "Query with Image",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "text",
+              "value": "What do you see in this image?",
+              "type": "text"
+            },
+            {
+              "key": "image",
+              "type": "file",
+              "src": "/path/to/your/image.png",
+              "description": "Upload a screenshot here"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{base_url}}/api/query",
+          "host": ["{{base_url}}"],
+          "path": ["api", "query"]
+        },
+        "description": "Query with screenshot for context"
+      }
+    },
+    {
+      "name": "Audio Transcription",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "audio",
+              "type": "file",
+              "src": "/path/to/your/audio.wav",
+              "description": "Upload audio file"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{base_url}}/api/transcribe",
+          "host": ["{{base_url}}"],
+          "path": ["api", "transcribe"]
+        },
+        "description": "Transcribe audio to text"
+      }
+    },
+    {
+      "name": "Voice Query with Image",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "audio",
+              "type": "file",
+              "src": "/path/to/your/audio.wav"
+            },
+            {
+              "key": "image",
+              "type": "file",
+              "src": "/path/to/your/image.png"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{base_url}}/api/query",
+          "host": ["{{base_url}}"],
+          "path": ["api", "query"]
+        },
+        "description": "Complete flow: voice query + screen context"
+      }
+    },
+    {
+      "name": "Analyze Screen Only",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "image",
+              "type": "file",
+              "src": "/path/to/your/image.png"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{base_url}}/api/analyze-screen",
+          "host": ["{{base_url}}"],
+          "path": ["api", "analyze-screen"]
+        },
+        "description": "Just analyze what's on screen"
+      }
+    },
+    {
+      "name": "Brand Research Query",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "text",
+              "value": "Tell me about Nike shoes - are they worth the price? Any reviews?",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{base_url}}/api/query",
+          "host": ["{{base_url}}"],
+          "path": ["api", "query"]
+        },
+        "description": "Query that triggers web search"
+      }
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+"""
+Configuration settings for Saathi Backend
+"""
+from pydantic_settings import BaseSettings
+from typing import Optional
+
+
+class Settings(BaseSettings):
+    """Application settings loaded from environment variables"""
+    
+    # Server Settings
+    APP_NAME: str = "Saathi API"
+    DEBUG: bool = False
+    
+    # AI API Keys
+    GEMINI_API_KEY: Optional[str] = None
+    GROQ_API_KEY: str
+    OPENAI_API_KEY: str
+    
+    # Search API
+    GOOGLE_SEARCH_API_KEY: Optional[str] = None
+    GOOGLE_SEARCH_ENGINE_ID: Optional[str] = None
+    
+    # Emergency Services (NEW)
+    TWILIO_ACCOUNT_SID: Optional[str] = None
+    TWILIO_AUTH_TOKEN: Optional[str] = None
+    TWILIO_PHONE_NUMBER: Optional[str] = None  # Format: +1234567890
+    
+    SENDGRID_API_KEY: Optional[str] = None
+    SENDGRID_FROM_EMAIL: Optional[str] = None  # Format: alerts@yourdomain.com
+    
+    class Config:
+        env_file = ".env"
+        case_sensitive = True
+
+
+# Global settings instance
+settings = Settings()
