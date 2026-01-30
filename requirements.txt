@@ -26,3 +26,7 @@ sendgrid==6.11.0
 # Utilities
 python-dateutil==2.8.2
 pydantic-settings==2.2.1
+supabase==2.3.4
+firebase-admin==6.4.0
+geopy==2.4.1
+email-validator==2.1.0
