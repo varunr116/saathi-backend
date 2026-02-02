@@ -107,15 +107,15 @@ class SupabaseService:
     # ============================================
     
     async def create_sos_event(
-        self,
-        victim_id: Optional[str],
-        victim_name: str,
-        victim_phone: str,
-        latitude: float,
-        longitude: float,
-        street_address: Optional[str] = None,
-        community_broadcast: bool = True,
-        broadcast_radius: int = 500
+    self,
+    victim_id: Optional[str],
+    victim_name: str,
+    victim_phone: str,
+    latitude: float,
+    longitude: float,
+    street_address: Optional[str] = None,
+    community_broadcast: bool = True,
+    broadcast_radius: int = 500
     ) -> Optional[Dict]:
         """Create a new SOS event"""
         try:
@@ -131,46 +131,17 @@ class SupabaseService:
                 "status": "active"
             }
             
-            # Set the PostGIS point
-            result = self.client.rpc(
-                "create_sos_with_location",
-                {
-                    "p_victim_id": victim_id,
-                    "p_victim_name": victim_name,
-                    "p_victim_phone": victim_phone,
-                    "p_lat": latitude,
-                    "p_lng": longitude,
-                    "p_street_address": street_address,
-                    "p_broadcast_enabled": community_broadcast,
-                    "p_broadcast_radius": broadcast_radius
-                }
-            ).execute()
-            
-            if result.data:
-                return result.data
-            
-            # Fallback: direct insert (without PostGIS point, will need manual update)
             result = self.client.table("sos_events").insert(data).execute()
-            return result.data[0] if result.data else None
+
+            if result.data and len(result.data)>0:
+                logger.info(f"SOS event created: {result.data[0].get('id')}")
+                return result.data[0]
+            else:
+                logger.error("SOS event insert returned no data")
+            return None
             
         except Exception as e:
-            logger.error(f"Error creating SOS event: {e}")
-            # Try simpler insert
-            try:
-                result = self.client.table("sos_events").insert({
-                    "victim_id": victim_id,
-                    "victim_name": victim_name,
-                    "victim_phone": victim_phone,
-                    "latitude": latitude,
-                    "longitude": longitude,
-                    "street_address": street_address,
-                    "community_broadcast_enabled": community_broadcast,
-                    "broadcast_radius_meters": broadcast_radius,
-                    "status": "active"
-                }).execute()
-                return result.data[0] if result.data else None
-            except Exception as e2:
-                logger.error(f"Fallback insert also failed: {e2}")
+                logger.error(f"Error creating SOS event: {e}")
                 return None
     
     async def get_sos_event(self, event_id: str) -> Optional[Dict]:
