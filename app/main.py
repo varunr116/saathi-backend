@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 # Import routes
 from app.routes import auth, users, community
-from app.routes.emergency_updated import router as emergency_router
+from app.routes.emergency import router as emergency_router
 
 # Import services for health check
 from app.services.supabase_service import supabase_service
